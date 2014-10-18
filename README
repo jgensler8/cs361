@@ -1,0 +1,10 @@
+Jeffrey Gensler
+jgensl2@uic.edu
+jgensler -- cs account
+
+=== Build ===
+make build
+./pager
+
+=== Clean ===
+make clean
