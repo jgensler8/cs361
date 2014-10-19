@@ -8,3 +8,20 @@ make build
 
 === Clean ===
 make clean
+
+~~~~~~~~~~~~~~~~~ BUILD FLAGS ~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are a few preprocessor flags that you should comment or uncomment based on what you want:
+
+These are found at the top of pager.cpp file if you want to comment/uncomment them. please choose one at a time and remember to run make again.
+
+******== useful for grading ==******
+#define OUTPUT_HUMAN
+
+== huge data set (not much use unless you have the RAM) ==
+#define OUTPUT_CALC
+(remember to create a directory named csv and change the python script to output the files in there)
+
+== the definition I used in conjunction with runAll.py ==
+#define OUTPUT_GRAPHS
+(this will let you export to .csv if you pipe the python script into a file
