@@ -37,11 +37,12 @@ BINDIR   = bin
 SOURCES  := $(wildcard $(SRCDIR)/*.cpp)
 INCLUDES := $(wildcard $(INCLUDEDIR)/*.h)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
+OBJECTFILES := $(OBJDIR)/*
 rm       = rm -f
 
 
 $(BINDIR): $(OBJECTS)
-	$(LINKER) $@/$(TARGET) $(LFLAGS) $(OBJECTS)
+	$(LINKER) $@/$(TARGET) $(LFLAGS) $(OBJECTFILES)
 	@echo "Linking complete!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp

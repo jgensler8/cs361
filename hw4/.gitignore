@@ -1,0 +1,5 @@
+bin/
+notes.txt
+child_two/include/util.h
+child_one/include/util.h
+parent/include/util.h

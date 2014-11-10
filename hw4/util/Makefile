@@ -14,7 +14,7 @@
 # ------------------------------------------------
 
 # project name (generate executable with this name)
-TARGET   = child_two
+TARGET   = util
 
 #CC       = gcc
 CC       = g++
@@ -37,12 +37,12 @@ BINDIR   = bin
 SOURCES  := $(wildcard $(SRCDIR)/*.cpp)
 INCLUDES := $(wildcard $(INCLUDEDIR)/*.h)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
-OBJECTFILES := $(OBJDIR)/*
 rm       = rm -f
 
+default: $(OBJECTS)
 
 $(BINDIR): $(OBJECTS)
-	$(LINKER) $@/$(TARGET) $(LFLAGS) $(OBJECTFILES)
+	$(LINKER) $@/$(TARGET) $(LFLAGS) $(OBJECTS)
 	@echo "Linking complete!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
