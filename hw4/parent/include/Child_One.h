@@ -1,5 +1,5 @@
-#ifndef PARENTH
-#define PARENTH
+#ifndef CHILD_ONEH
+#define CHILD_ONEH
 
 #include <string>
 #include <sys/types.h>
@@ -7,23 +7,20 @@
 #include <sys/msg.h>
 #include <iostream>
 #include <unistd.h>
-
-#include <cstring>
 #include "util.h"
 
 using namespace std;
 
-class Parent
+class Child_One
 {
   public:
-    Parent(int mid, int qid1, int qid2);
+    Child_One(int memid, int qid);
     void start();
   protected:
   
   private:
-    int mid;
-    int qid1; //input
-    int qid2; //output
+    char* memid;
+    char* qid;
 };
 
 #endif

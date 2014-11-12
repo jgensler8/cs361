@@ -27,5 +27,14 @@ namespace util
     using namespace std;
     std::cout << "Jeff Gensler, jgensler, jgensl2@uic.edu, HW4" << std::endl << std::flush;
   }
+ 
+  void sigCHLDcallback(int status)
+  {
+    exit(-1);
+  }
   
+  void sigUSR1callback(int status)
+  {
+    exit(-1);
+  }
 }

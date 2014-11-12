@@ -1,6 +1,6 @@
 
 BINDIR=./bin
-BUILDPATHS=parent child_one child_two
+BUILDPATHS=parent mandelCalc mandelDisplay
 UTILPATH=util
 
 default: clean build
