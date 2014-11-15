@@ -4,10 +4,18 @@
 class mandelCalc
 {
   public:
-    mandelCalc();
+    mandelCalc(double xMin, double xMax, double yMin, double yMax, int nRows, int nCols, int maxIters);
+    int mandelbrot();
   protected:
   
   private:
+    double xMin;
+    double xMax;
+    double yMin;
+    double yMax;
+    int nRows;
+    int nCols;
+    int maxIters;
 };
 
 #endif

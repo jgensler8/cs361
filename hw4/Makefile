@@ -23,3 +23,12 @@ clean:
 	for bp in $(BUILDPATHS); do \
 		make -C $$bp clean; \
 	done
+
+test: default
+	cd $(BINDIR) && \
+	echo "TEST ONE" && \
+	./parent < ../test/infile
+
+reclaim:
+	ipcrm `ipcs -q | grep \`whoami\` | awk '{print "-q " $$2}'`
+	ipcrm `ipcs -m | grep \`whoami\` | awk '{print "-m " $$2}'`
