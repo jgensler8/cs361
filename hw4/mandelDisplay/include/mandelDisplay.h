@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/shm.h>
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include "util.h"
 

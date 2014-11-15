@@ -24,7 +24,7 @@ int forkChildOne(int memid, int qid, int pipe_p_c1_fd[2], int pipe_p_c1, int pip
   int child = fork();
   if( child < 0)
   {
-    std::cout << "error forking child one" << std::endl;
+    fprintf(stdout, "error forking child one\n");
     exit(-1);
   }
   else if (child == 0)
@@ -53,7 +53,7 @@ int forkChildTwo(int memid, int qid1, int qid2, int pipe_p_c1_fd[2], int pipe_p_
   int child = fork();
   if( child < 0)
   {
-    std::cout << "error forking child two" << std::endl;
+    fprintf(stdout,"error forking child two\n");
     exit(-1);
   }
   else if (child == 0)
@@ -82,19 +82,19 @@ void checkAquisition(int qid1, int qid2, int memID)
   
   if(qid1 < 0)
   {
-    std::cout << "ERROR ACQUIRING QID1" << std::endl;
+    fprintf(stdout, "ERROR ACQUIRING QID1\n");
     err = true;
   }
   
   if(qid2 < 0)
   {
-    std::cout << "ERROR ACQUIRING QID2" << std::endl;
+    fprintf(stdout, "ERROR ACQUIRING QID2\n");
     err = true;
   }
   
   if(memID < 0)
   {
-    std::cout << "ERROR ACQUIRING MEMID" << std::endl;
+    fprintf(stdout, "ERROR ACQUIRING MEMID\n");
     err = true;
   }
   
@@ -139,12 +139,15 @@ int main()
   close(pipe_c1_c2_fd[1]);
   close(pipe_p_c1_fd[0]);
   
-  //redirect pipes
-  dup2(pipe_p_c1_fd[1], STDOUT_FD);
-  
-  Parent* parent = new Parent(memID, qid1, qid2, c1, c2);
+  Parent* parent = new Parent(memID, qid1, qid2, c1, c2, pipe_p_c1_fd);
   parent->start();
   delete parent;
+  
+  //send signals to children
+  kill(c1, SIGUSR1);
+  kill(c2, SIGUSR1);
+  
+  //wait for children
   
   //free resources
   shmctl(memID, IPC_RMID, NULL); //shmdt?

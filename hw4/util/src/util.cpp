@@ -49,7 +49,7 @@ namespace util
     if( nRows < 0) return false;
     if( maxIters < 0) return false;
     //overflow
-    if(nCols*nRows*sizeof(int) > util::MEMSIZE) return false;
+    //if(nCols*nRows*sizeof(int) > util::MEMSIZE) return false;
     return true;
   }
  

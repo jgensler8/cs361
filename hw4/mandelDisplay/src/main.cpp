@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <limits>
 #include "util.h"
 
 #include <fstream>
@@ -24,9 +25,9 @@ int main(int argc, char** argv)
   int memid = 0, qid1 = 0, qid2 = 0;
   parseArgs(argc, argv, memid, qid1, qid2);
   
-  std::cout << "args:"
-    << qid1 << " "
-    << qid2 << std::endl;
+  //std::cout << "args:"
+  //  << qid1 << " "
+  //  << qid2 << std::endl;
   
   //set signal handler
   util::setUSR1handler();
@@ -34,22 +35,22 @@ int main(int argc, char** argv)
   double xMin, xMax, yMin, yMax;
   int nRows, nCols, maxIters;
   
-  while(std::cin.good())
+  while(true)
   {
+    
     //some weird multiple input bug...
     util::initializeInput(xMin, xMax, yMin, yMax, nRows, nCols, maxIters);
     
-    std::cin
-      >> xMin
-      >> xMax
-      >> yMin
-      >> yMax
-      >> nRows
-      >> nCols
-      >> maxIters;
+    fscanf(stdin, " %lf %lf %lf %lf %d %d %d", &xMin, &xMax, &yMin, &yMax, &nRows, &nCols, &maxIters);
       
     //some weird multiple input bug...
-    if( ! util::isValidInput(xMin, xMax, yMin, yMax, nRows, nCols, maxIters)) continue;
+    if( ! util::isValidInput(xMin, xMax, yMin, yMax, nRows, nCols, maxIters))
+    {
+      fprintf(stdout, "MANDELDISPLAY GOT INVALID INPUT\n");
+      fflush(stdout);
+      fflush(stdin);
+      exit(-999);
+    }
     
     //receive file
     char* filename;
@@ -68,15 +69,7 @@ int main(int argc, char** argv)
     outfile.close();
     
     //write these to stdout
-    std::cout
-      << "MandelDisplay: "
-      << xMin << " "
-      << xMax << " "
-      << yMin << " "
-      << yMax << " "
-      << nRows << " "
-      << nCols << " "
-      << maxIters << std::endl << std::flush;
+    fprintf(stdout, "%lf %lf %lf %lf %d %d %d\n", xMin, xMax, yMin, yMax, nRows, nCols, maxIters);
       
     //write done to message queue
     util::msg_snd(qid1, ch_result);

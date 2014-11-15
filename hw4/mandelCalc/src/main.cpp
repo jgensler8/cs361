@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <limits>
 #include "util.h"
 
 #include <fstream>
@@ -29,53 +30,37 @@ int main(int argc, char** argv)
   double xMin, xMax, yMin, yMax;
   int nRows, nCols, maxIters;
   
-  //testing
-  ofstream testfile;
-  testfile.open ("mandelCalc.output");
-  
-  while(std::cin.good())
+  while(true)
   {
-    //some weird multiple input bug...
     util::initializeInput(xMin, xMax, yMin, yMax, nRows, nCols, maxIters);
     
-    std::cin
-      >> xMin
-      >> xMax
-      >> yMin
-      >> yMax
-      >> nRows
-      >> nCols
-      >> maxIters;
+    fscanf(stdin, " %lf %lf %lf %lf %d %d %d", &xMin, &xMax, &yMin, &yMax, &nRows, &nCols, &maxIters);
     
-    //some weird multiple input bug...
-    if( ! util::isValidInput(xMin, xMax, yMin, yMax, nRows, nCols, maxIters)) continue;
+    if( ! util::isValidInput(xMin, xMax, yMin, yMax, nRows, nCols, maxIters))
+    {
+      //fprintf(stdout, "MANDELCALC ERROR\n");
+      //fprintf(stdout, "%lf %lf %lf %lf %d %d %d", xMin, xMax, yMin, yMax, nRows, nCols, maxIters);
+      fflush(stdin);
+      fflush(stdout);
+      //break;
+      //continue;
+      exit(-1);
+    }
     
     mandelCalc* m = new mandelCalc(xMin, xMax, yMin, yMax, nRows, nCols, maxIters, memid);
     int result = m->mandelbrot();
     delete m;
     char* ch_result = util::intToString(result);
     
-    //testing
-    testfile << "RESULT:" << ch_result << std::endl;
-    
     //write these to stdout
-    std::cout
-      << xMin << " "
-      << xMax << " "
-      << yMin << " "
-      << yMax << " "
-      << nRows << " "
-      << nCols << " "
-      << maxIters << std::endl << std::flush;
+    fprintf(stdout, "%lf %lf %lf %lf %d %d %d\n", xMin, xMax, yMin, yMax, nRows, nCols, maxIters);
+    fflush(stdout);
       
     //write done to message queue
     util::msg_snd(qid, ch_result);
     
     free(ch_result);
   }
-  
-  
-    testfile.close();
   
   return 0;
 }

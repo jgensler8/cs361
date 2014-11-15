@@ -51,7 +51,7 @@ int mandelCalc::mandelbrot()
         Zy = Zy_next;
       }
       
-      if( n >= this->maxIters) this->storeVal<int>(r, c, n);
+      if( n >= this->maxIters) this->storeVal<int>(r, c, -1);
       else this->storeVal<int>(r, c, n);
     }
   }

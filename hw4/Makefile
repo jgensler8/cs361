@@ -22,12 +22,14 @@ clean:
 	make -C $(UTILPATH) clean && \
 	for bp in $(BUILDPATHS); do \
 		make -C $$bp clean; \
+		rm -f $$bp/bin/*; \
+		rm -f $$bp/obj/*; \
 	done
 
 test: default
 	cd $(BINDIR) && \
 	echo "TEST ONE" && \
-	./parent < ../test/infile
+	./mandelbrot < ../test/infile
 
 reclaim:
 	ipcrm `ipcs -q | grep \`whoami\` | awk '{print "-q " $$2}'`

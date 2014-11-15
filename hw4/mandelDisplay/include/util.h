@@ -15,10 +15,12 @@ namespace util
 {
   //utility
   const int NUMCOLORS = 15;
+  const int MAXFILENAME = 50;
   const char COLORS[NUMCOLORS] = {
     '.','-','~',':','+',
     '*','%','O','8','&',
     '?','$','@','#','X' };
+  const int COLUMNWIDTH = 8;
   char* intToString(int i);
   void printName();
   void initializeInput(double &xMin, double &xMax, double &yMin, double &yMax, int &nRows, int &nCols, int &maxIters);
@@ -27,7 +29,7 @@ namespace util
   
   //shared memory
   const int MEMKEY = 0x73FF;
-  const int MEMSIZE = 0x10000;
+  const int MEMSIZE = 1000000; //1,000,000
   
   //signals
   void sigCHLDcallback(int status);

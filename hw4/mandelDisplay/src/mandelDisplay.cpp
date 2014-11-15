@@ -29,6 +29,21 @@ int mandelDisplay::display()
 {
   for(int r = this->nRows - 1; r >= 0; --r)
   {
+    //print first column
+    if(r == this->nRows - 1)
+    {
+      std::cout << std::setw(util::COLUMNWIDTH) << this->yMin;
+    }
+    else if( r == 0)
+    {
+      std::cout << std::setw(util::COLUMNWIDTH) << this->yMax;
+    }
+    else
+    {
+      std::cout << std::setw(util::COLUMNWIDTH) << "";
+    }
+    
+    //print data
     for(int c = this->nCols - 1; c >= 0; --c)
     {
       int n;
@@ -36,13 +51,12 @@ int mandelDisplay::display()
       if( n < 0)
       {
         std::cout << " ";
-        this->outfile << " ";
       }
       else
       {
         std::cout << util::getColor(n);
-        this->outfile << util::getColor(n);
       }
+      this->outfile << n << " ";
     }
     std::cout << std::endl;
     this->outfile << std::endl;
