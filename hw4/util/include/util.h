@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
+#include <signal.h>
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
@@ -13,10 +14,16 @@
 namespace util
 {
   //utility
+  const int NUMCOLORS = 15;
+  const char COLORS[NUMCOLORS] = {
+    '.','-','~',':','+',
+    '*','%','O','8','&',
+    '?','$','@','#','X' };
   char* intToString(int i);
-  void printName();;
+  void printName();
   void initializeInput(double &xMin, double &xMax, double &yMin, double &yMax, int &nRows, int &nCols, int &maxIters);
   bool isValidInput(double xMin, double xMax, double yMin, double yMax, int nRows, int nCols, int maxIters);
+  char getColor(int n);
   
   //shared memory
   const int MEMKEY = 0x73FF;
@@ -24,7 +31,9 @@ namespace util
   
   //signals
   void sigCHLDcallback(int status);
+  int setCHLDhandler();
   void sigUSR1callback(int status);
+  int setUSR1handler();
   
   //messages queues
   const int QKEY1 = 0xDEAD;

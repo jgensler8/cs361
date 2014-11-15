@@ -17,70 +17,7 @@ cd bin && ./parent
 === reclaiming ===
 make reclaim
 (this runs a script to remove message queues and shared memory)
+(my program shouldn't break, but in the event that it does, these will help)
 
 === file structure (after building) ===
-.
-├── bin
-│   ├── mandelCalc
-│   ├── mandelDisplay
-│   └── parent
-├── Makefile
-├── mandelCalc
-│   ├── bin
-│   │   └── mandelCalc
-│   ├── include
-│   │   ├── mandelCalc.h
-│   │   └── util.h
-│   ├── Makefile
-│   ├── obj
-│   │   ├── Child_one.o
-│   │   ├── main.o
-│   │   ├── mandelCalc.o
-│   │   └── util.o
-│   └── src
-│       ├── main.cpp
-│       └── mandelCalc.cpp
-├── mandelDisplay
-│   ├── bin
-│   │   └── mandelDisplay
-│   ├── include
-│   │   ├── mandelDisplay.h
-│   │   └── util.h
-│   ├── Makefile
-│   ├── obj
-│   │   ├── main.o
-│   │   ├── mandelDisplay.o
-│   │   └── util.o
-│   └── src
-│       ├── main.cpp
-│       └── mandelDisplay.cpp
-├── notes.txt
-├── parent
-│   ├── bin
-│   │   └── parent
-│   ├── include
-│   │   ├── Child_One.h
-│   │   ├── Child_Two.h
-│   │   ├── Parent.h
-│   │   └── util.h
-│   ├── Makefile
-│   ├── obj
-│   │   ├── Child_One.o
-│   │   ├── Child_Two.o
-│   │   ├── main.o
-│   │   ├── Parent.o
-│   │   └── util.o
-│   └── src
-│       ├── Child_One.cpp
-│       ├── Child_Two.cpp
-│       ├── main.cpp
-│       └── Parent.cpp
-├── README
-└── util
-    ├── include
-    │   └── util.h
-    ├── Makefile
-    ├── obj
-    │   └── util.o
-    └── src
-        └── util.cpp
+

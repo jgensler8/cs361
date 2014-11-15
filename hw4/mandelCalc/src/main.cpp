@@ -24,14 +24,14 @@ int main(int argc, char** argv)
   parseArgs(argc, argv, memid, qid);
   
   //set signal handler
-  //TODO util::sigUSR1callback
+  util::setUSR1handler();
   
   double xMin, xMax, yMin, yMax;
   int nRows, nCols, maxIters;
   
   //testing
   ofstream testfile;
-  testfile.open ("childone.txt");
+  testfile.open ("mandelCalc.output");
   
   while(std::cin.good())
   {
@@ -50,15 +50,13 @@ int main(int argc, char** argv)
     //some weird multiple input bug...
     if( ! util::isValidInput(xMin, xMax, yMin, yMax, nRows, nCols, maxIters)) continue;
     
-    mandelCalc* m = new mandelCalc(xMin, xMax, yMin, yMax, nRows, nCols, maxIters);
+    mandelCalc* m = new mandelCalc(xMin, xMax, yMin, yMax, nRows, nCols, maxIters, memid);
     int result = m->mandelbrot();
     delete m;
     char* ch_result = util::intToString(result);
     
-    
     //testing
     testfile << "RESULT:" << ch_result << std::endl;
-    
     
     //write these to stdout
     std::cout

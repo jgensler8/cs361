@@ -29,7 +29,7 @@ int main(int argc, char** argv)
     << qid2 << std::endl;
   
   //set signal handler
-  //TODO util::sigUSR1callback
+  util::setUSR1handler();
   
   double xMin, xMax, yMin, yMax;
   int nRows, nCols, maxIters;
@@ -51,16 +51,21 @@ int main(int argc, char** argv)
     //some weird multiple input bug...
     if( ! util::isValidInput(xMin, xMax, yMin, yMax, nRows, nCols, maxIters)) continue;
     
-    mandelDisplay* m = new mandelDisplay(xMin, xMax, yMin, yMax, nRows, nCols, maxIters);
+    //receive file
+    char* filename;
+    util::msg_rcv(qid2, filename);
+    //open file
+    ofstream outfile;
+    outfile.open (filename);
+    
+    //calculate the display function
+    mandelDisplay* m = new mandelDisplay(xMin, xMax, yMin, yMax, nRows, nCols, maxIters, memid, outfile);
     int result = m->display();
     delete m;
     char* ch_result = util::intToString(result);
     
-    //testing
-    ofstream testfile;
-    testfile.open ("childtwo.txt");
-    testfile << ch_result << std::endl;
-    testfile.close();
+    //close file
+    outfile.close();
     
     //write these to stdout
     std::cout
@@ -72,11 +77,6 @@ int main(int argc, char** argv)
       << nRows << " "
       << nCols << " "
       << maxIters << std::endl << std::flush;
-      
-    char* filename;
-    util::msg_rcv(qid2, filename);
-    
-    std::cout << "Filename: " << filename << std::endl;
       
     //write done to message queue
     util::msg_snd(qid1, ch_result);

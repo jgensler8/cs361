@@ -41,24 +41,47 @@ namespace util
  
   bool isValidInput(double xMin, double xMax, double yMin, double yMax, int nRows, int nCols, int maxIters)
   {
-    //if( xMin < 0) return false;
-    //if( xMax < 0) return false;
-    //if( yMin < 0) return false;
-    //if( yMax < 0) return false;
+    //logical errors
+    if( xMin >= xMax) return false;
+    if( xMax <= xMin) return false;
+    if( yMin >= yMax) return false;
+    if( yMax <= yMin) return false;
     if( nRows < 0) return false;
     if( maxIters < 0) return false;
+    //overflow
+    if(nCols*nRows*sizeof(int) > util::MEMSIZE) return false;
     return true;
+  }
+ 
+  char getColor(int n)
+  {
+    return (char)util::COLORS[ n % util::NUMCOLORS];
   }
  
   //signals
   void sigCHLDcallback(int status)
   {
+    //std::cout << "ERROR IN CHILD. STATUS:" << status << std::endl
     exit(-1);
+  }
+  
+  int setCHLDhandler()
+  {
+    struct sigaction params;
+    params.sa_handler = util::sigCHLDcallback;
+    return sigaction(SIGCHLD, &params, NULL);
   }
   
   void sigUSR1callback(int status)
   {
-    exit(-1);
+    exit(0); //non negative exit code
+  }
+  
+  int setUSR1handler()
+  {
+    struct sigaction params;
+    params.sa_handler = util::sigUSR1callback;
+    return sigaction(SIGUSR1, &params, NULL);
   }
   
   
@@ -70,7 +93,6 @@ namespace util
     strncpy(buf.message, message, util::QMSGSIZE);
     buf.message[util::QMSGSIZE-1] = '\0';           //ensure we don't send a weird string across
     return msgsnd(qid, &buf, util::QMSGSIZE , 0);
-    //return msgsnd(qid, &buf, strlen(buf.message)+1 , 0);
   }
   
   int msg_rcv(int qid, char* &message)
