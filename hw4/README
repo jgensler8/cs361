@@ -1,7 +1,9 @@
-3 projects
-parent (main)
-child_one (mandlecalc)
-child_two (mandeldisplay)
+Jeff Gensler, jgensl2@uic.edu, jgensler
+Notes:
+* I have code to catch SIGCHLD but this interferes with the normal execution of things so
+it is left "unimplemented" (located in Parent.cpp). I think it interferes with the normal reaping
+of children after SIGUSR1s are sent...
+* Has some error checking. Not sure if I have checked all of the conditions.
 
 === building ===
 make
@@ -11,8 +13,14 @@ make
 make clean
 
 === running ===
-cd bin && ./parent
+$ cd bin && ./mandelbrot
 (so that the paths are relative for exec statements)
+
+-OR-
+
+(edit ./test/infile and run)
+$ make test
+(to rebuild and test using that file)
 
 === reclaiming ===
 make reclaim
@@ -20,4 +28,74 @@ make reclaim
 (my program shouldn't break, but in the event that it does, these will help)
 
 === file structure (after building) ===
+.
+├── bin
+│   ├── mandelbrot
+│   ├── mandelCalc
+│   ├── mandelDisplay
+│   ├── testfile1
+│   └── testfile2
+├── Makefile
+├── mandelbrot
+│   ├── bin
+│   │   └── mandelbrot
+│   ├── include
+│   │   ├── Child_One.h
+│   │   ├── Child_Two.h
+│   │   ├── Parent.h
+│   │   └── util.h
+│   ├── Makefile
+│   ├── obj
+│   │   ├── Child_One.o
+│   │   ├── Child_Two.o
+│   │   ├── main.o
+│   │   ├── Parent.o
+│   │   └── util.o
+│   └── src
+│       ├── Child_One.cpp
+│       ├── Child_Two.cpp
+│       ├── main.cpp
+│       └── Parent.cpp
+├── mandelCalc
+│   ├── bin
+│   │   └── mandelCalc
+│   ├── include
+│   │   ├── mandelCalc.h
+│   │   └── util.h
+│   ├── Makefile
+│   ├── obj
+│   │   ├── main.o
+│   │   ├── mandelCalc.o
+│   │   └── util.o
+│   └── src
+│       ├── main.cpp
+│       └── mandelCalc.cpp
+├── mandelDisplay
+│   ├── bin
+│   │   └── mandelDisplay
+│   ├── include
+│   │   ├── mandelDisplay.h
+│   │   └── util.h
+│   ├── Makefile
+│   ├── obj
+│   │   ├── main.o
+│   │   ├── mandelDisplay.o
+│   │   └── util.o
+│   └── src
+│       ├── main.cpp
+│       └── mandelDisplay.cpp
+├── notes.txt
+├── README
+├── test
+│   └── infile
+├── testfile
+└── util
+    ├── include
+    │   └── util.h
+    ├── Makefile
+    ├── obj
+    │   └── util.o
+    └── src
+        └── util.cpp
 
+21 directories, 47 files

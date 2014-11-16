@@ -23,7 +23,7 @@ void Parent::start()
   int nRows, nCols, maxIters;
   
   //CHLD handler
-  //util::setCHLDhandler();
+  //util::setCHLDhandler(util::CHLDhandler);
   
   while(true)
   {

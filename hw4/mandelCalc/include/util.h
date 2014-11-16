@@ -32,6 +32,7 @@ namespace util
   const int MEMSIZE = 1000000; //1,000,000
   
   //signals
+  void CHLDhandler(int status);
   int setCHLDhandler( void(* func)(int) );
   int setUSR1handler( void(* func)(int) );
   
