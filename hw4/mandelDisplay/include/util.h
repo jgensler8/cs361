@@ -32,10 +32,8 @@ namespace util
   const int MEMSIZE = 1000000; //1,000,000
   
   //signals
-  void sigCHLDcallback(int status);
-  int setCHLDhandler();
-  void sigUSR1callback(int status);
-  int setUSR1handler();
+  int setCHLDhandler( void(* func)(int) );
+  int setUSR1handler( void(* func)(int) );
   
   //messages queues
   const int QKEY1 = 0xDEAD;

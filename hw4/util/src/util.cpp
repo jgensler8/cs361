@@ -59,28 +59,17 @@ namespace util
   }
  
   //signals
-  void sigCHLDcallback(int status)
-  {
-    //std::cout << "ERROR IN CHILD. STATUS:" << status << std::endl
-    exit(-1);
-  }
-  
-  int setCHLDhandler()
+  int setCHLDhandler( void(* func)(int) )
   {
     struct sigaction params;
-    params.sa_handler = util::sigCHLDcallback;
+    params.sa_handler = func;
     return sigaction(SIGCHLD, &params, NULL);
   }
   
-  void sigUSR1callback(int status)
-  {
-    exit(0); //non negative exit code
-  }
-  
-  int setUSR1handler()
+  int setUSR1handler( void(* func)(int) )
   {
     struct sigaction params;
-    params.sa_handler = util::sigUSR1callback;
+    params.sa_handler = func;
     return sigaction(SIGUSR1, &params, NULL);
   }
   

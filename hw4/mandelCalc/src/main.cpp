@@ -9,6 +9,8 @@
 
 using namespace std;
 
+int numCalculations = 0;
+
 void parseArgs(int argc, char** argv, int &memid, int &qid)
 {
   if( argc >= 2)
@@ -18,6 +20,11 @@ void parseArgs(int argc, char** argv, int &memid, int &qid)
   }
 }
 
+void calcUSR1handler(int status)
+{
+  exit(numCalculations);
+}
+
 int main(int argc, char** argv)
 {
   //parse args
@@ -25,7 +32,7 @@ int main(int argc, char** argv)
   parseArgs(argc, argv, memid, qid);
   
   //set signal handler
-  util::setUSR1handler();
+  util::setUSR1handler(calcUSR1handler);
   
   double xMin, xMax, yMin, yMax;
   int nRows, nCols, maxIters;
@@ -55,6 +62,8 @@ int main(int argc, char** argv)
     //write these to stdout
     fprintf(stdout, "%lf %lf %lf %lf %d %d %d\n", xMin, xMax, yMin, yMax, nRows, nCols, maxIters);
     fflush(stdout);
+    
+    ++numCalculations;
       
     //write done to message queue
     util::msg_snd(qid, ch_result);

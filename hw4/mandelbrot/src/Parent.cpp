@@ -23,7 +23,7 @@ void Parent::start()
   int nRows, nCols, maxIters;
   
   //CHLD handler
-  util::setCHLDhandler();
+  //util::setCHLDhandler();
   
   while(true)
   {
@@ -61,8 +61,6 @@ void Parent::start()
     //send the filename over the q1 to child two
     util::msg_snd(this->qid2, filename);
     
-    fprintf(stdout, "waiting for the message to come back\n");
-    
     //listen for done from child one
     char* message_c1 = NULL;
     util::msg_rcv(this->qid1, message_c1);
@@ -76,7 +74,7 @@ void Parent::start()
     
     //prompt user for more input
     char yesNo;
-    fprintf(stdout, "Would you like to enter more? 'Y' or 'y' for yes, anything for no :");
+    fprintf(stdout, "Would you like to enter more? 'Y' or 'y' for yes, some char for no :");
     fscanf(stdin, " %c", &yesNo);
     if( yesNo != 'Y' && yesNo != 'y')
     {
@@ -84,4 +82,7 @@ void Parent::start()
     }
     fflush(stdin);
   }
+  
+  fprintf(stdout, "Goodbye!\n");
+  fflush(stdout);
 }

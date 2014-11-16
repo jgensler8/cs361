@@ -5,6 +5,9 @@
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <signal.h>
 #include "Parent.h"
 #include "Child_One.h"
 #include "Child_Two.h"
@@ -147,7 +150,13 @@ int main()
   kill(c1, SIGUSR1);
   kill(c2, SIGUSR1);
   
-  //wait for children
+  //wait for children in no particular order
+  int status1, status2;
+  waitpid(c1, &status1, 0);
+  waitpid(c2, &status2, 0);
+  
+  fprintf(stdout, "child one: %d, child two: %d\n", WEXITSTATUS(status1), WEXITSTATUS(status2));
+  fflush(stdout);
   
   //free resources
   shmctl(memID, IPC_RMID, NULL); //shmdt?

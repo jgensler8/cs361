@@ -9,6 +9,8 @@
 
 using namespace std;
 
+int numCalculations = 0;
+
 void parseArgs(int argc, char** argv, int &memid, int &qid1, int &qid2)
 {
   if( argc >= 3)
@@ -17,6 +19,11 @@ void parseArgs(int argc, char** argv, int &memid, int &qid1, int &qid2)
     qid1 = atoi( argv[2]);
     qid2 = atoi( argv[3]);
   }
+}
+
+void calcUSR1handler(int status)
+{
+  exit(numCalculations);
 }
 
 int main(int argc, char** argv)
@@ -30,7 +37,7 @@ int main(int argc, char** argv)
   //  << qid2 << std::endl;
   
   //set signal handler
-  util::setUSR1handler();
+  util::setUSR1handler(calcUSR1handler);
   
   double xMin, xMax, yMin, yMax;
   int nRows, nCols, maxIters;
@@ -70,6 +77,8 @@ int main(int argc, char** argv)
     
     //write these to stdout
     fprintf(stdout, "%lf %lf %lf %lf %d %d %d\n", xMin, xMax, yMin, yMax, nRows, nCols, maxIters);
+    
+    ++numCalculations;
       
     //write done to message queue
     util::msg_snd(qid1, ch_result);
