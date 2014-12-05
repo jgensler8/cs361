@@ -84,6 +84,8 @@ void rt_initThreadInfo(threadInfo* arr, int len, double* doubles, int* buffers, 
     //additional
     arr[n].currentOpIndex = n;
     arr[n].useLocks = useLocks;
+    
+    printf("sleeptime[%d] = %lf\n", n, arr[n].sleepTime);
   }
 }
 
