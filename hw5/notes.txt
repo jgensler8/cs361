@@ -1,0 +1,23 @@
+ipcs -?
+
+
+sprintf(str, "%d", num);
+
+//redirect
+dup2(fds[READ], 0)
+scanf will now read from pipe
+
+scanf("%s", buf);
+
+//convert
+long_t number = strtol(buf, NULL, 10);
+
+
+
+////// msg queue
+
+                    V this is a gottcha because we don't count the long
+msgsnd(qid, &buff, strlen(buffer)+1, 0)
+
+can be using the same queue to send multiple message types on. blocking reads will wait
+for the right type of message to read

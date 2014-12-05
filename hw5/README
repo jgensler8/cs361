@@ -1,0 +1,26 @@
+Jeff Gensler, jgensl2@uic.edu, jgensler
+Notes:
+* Screen mutex is at position (nBuffers) for -lock
+* Screen mutex is at position (0) for -nolock
+* Screen mutex is only needed when needed (separate printf statements)
+
+=== building ===
+make
+(this will run clean, then a build)
+
+=== cleaning ===
+make clean
+
+=== running ===
+$ ./bin/raceTest <arg> ...
+
+=== reclaim ===
+$ make reclaim
+(reclaim all semaphore sets)
+
+-OR-
+
+$ make test
+(to rebuild and test using ONE set of test params in the Makefile)
+
+=== file structure (after building) ===
