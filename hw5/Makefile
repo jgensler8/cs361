@@ -29,6 +29,6 @@ clean:
 test: default
 	cd $(BINDIR) && \
 	echo "TEST ONE" && \
-	./raceTest 29 5 .1 .5 -lock
+	./raceTest 3 1 .1 .5 -lock
 reclaim:
 	ipcrm `ipcs -s | grep \`whoami\` | awk '{print "-s " $$2}'`
